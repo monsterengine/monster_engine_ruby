@@ -19,13 +19,15 @@ static void callback_ubf(void *value) {
 
 }
 
+extern const rb_data_type_t rb_plamo_app_type;
+
 static VALUE start(VALUE self, VALUE rb_plamo_app, VALUE rb_monster_engine_config) {
-  Wrapper *plamo_app_wrapper;
-  Data_Get_Struct(rb_plamo_app, Wrapper, plamo_app_wrapper);
+  PlamoApp *plamo_app;
+  TypedData_Get_Struct(rb_plamo_app, PlamoApp, &rb_plamo_app_type, plamo_app);
   Wrapper *monster_engine_config_wrapper;
   Data_Get_Struct(rb_monster_engine_config, Wrapper, monster_engine_config_wrapper);
   MonsterEngineRbCallbackSetting *monster_engine_rb_callback_setting = malloc(sizeof(MonsterEngineRbCallbackSetting));
-  monster_engine_rb_callback_setting->plamo_app = plamo_app_wrapper->inner;
+  monster_engine_rb_callback_setting->plamo_app = plamo_app;
   monster_engine_rb_callback_setting->monster_engine_config = monster_engine_config_wrapper->inner;
 
   // rb_thread_call_with_gvl(callback, monster_engine_rb_callback_setting);
