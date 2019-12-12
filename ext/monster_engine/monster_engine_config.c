@@ -1,21 +1,29 @@
 #include "monster_engine.h"
-#include "wrapper.h"
 
 VALUE rb_cMonsterEngineConfig;
 
-static void deallocate(Wrapper *wrapper) {
-  monster_engine_config_destroy(wrapper->inner);
-  free(wrapper);
+static void deallocate(void *monster_engine_config) {
+  monster_engine_config_destroy(monster_engine_config);
 }
 
+const rb_data_type_t rb_monster_engine_config_type = {
+  "Config",
+  {
+    NULL,
+    deallocate,
+    NULL,
+  },
+  NULL,
+  NULL,
+  0,
+};
+
 static VALUE allocate(VALUE klass) {
-  return Data_Wrap_Struct(klass, NULL, deallocate, malloc(sizeof(Wrapper)));
+  return TypedData_Wrap_Struct(klass, &rb_monster_engine_config_type, NULL);
 }
 
 static VALUE initialize(VALUE self, VALUE rb_bind, VALUE rb_workers) {
-  Wrapper *wrapper;
-  Data_Get_Struct(self, Wrapper, wrapper);
-  wrapper->inner = monster_engine_config_new(StringValueCStr(rb_bind), FIX2UINT(rb_workers));
+  DATA_PTR(self) = monster_engine_config_new(StringValueCStr(rb_bind), FIX2UINT(rb_workers));
   return self;
 }
 
