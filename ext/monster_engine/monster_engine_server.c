@@ -29,6 +29,7 @@ static VALUE allocate(VALUE klass) {
 }
 
 static VALUE initialize(VALUE self, VALUE rb_plamo_app, VALUE rb_monster_engine_config) {
+  rb_iv_set(self, "@config", rb_monster_engine_config);
   PlamoApp *plamo_app;
   TypedData_Get_Struct(rb_plamo_app, PlamoApp, &rb_plamo_app_type, plamo_app);
   MonsterEngineConfig *monster_engine_config;
@@ -48,7 +49,9 @@ static void* callback(void *monster_engine_server) {
 }
 
 static VALUE start(VALUE self) {
-  for (int i = 0; i < 3; i++) {
+  VALUE rb_config = rb_iv_get(self, "@config");
+  const unsigned int workers = FIX2UINT(rb_iv_get(rb_config, "@workers"));
+  for (int i = 0; i < workers; i++) {
     pid_t pid = fork();
     if (pid == 0) {
       rb_thread_create(plamo_rb_event_thread, NULL);

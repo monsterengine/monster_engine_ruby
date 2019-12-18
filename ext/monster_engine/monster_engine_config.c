@@ -24,6 +24,7 @@ static VALUE allocate(VALUE klass) {
 
 static VALUE initialize(VALUE self) {
   DATA_PTR(self) = monster_engine_config_new();
+  rb_iv_set(self, "@workers", INT2FIX(1));
   return self;
 }
 
@@ -36,10 +37,20 @@ static VALUE set_bind(VALUE self, VALUE rb_bind) {
   return Qnil;
 }
 
+static VALUE get_workers(VALUE self) {
+  return rb_iv_get(self, "@workers");
+}
+
+static VALUE set_workers(VALUE self, VALUE rb_workers) {
+  return rb_iv_set(self, "@workers", rb_workers);
+}
+
 void Init_monster_engine_config(void) {
   rb_cMonsterEngineConfig = rb_define_class_under(rb_mMonsterEngine, "Config", rb_cObject);
   rb_define_alloc_func(rb_cMonsterEngineConfig, allocate);
   rb_define_method(rb_cMonsterEngineConfig, "initialize", initialize, 0);
   rb_define_method(rb_cMonsterEngineConfig, "bind", get_bind, 0);
   rb_define_method(rb_cMonsterEngineConfig, "bind=", set_bind, 1);
+  rb_define_method(rb_cMonsterEngineConfig, "workers", get_workers, 0);
+  rb_define_method(rb_cMonsterEngineConfig, "workers=", set_workers, 1);
 }
