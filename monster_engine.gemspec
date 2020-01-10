@@ -24,6 +24,6 @@ Gem::Specification.new do |spec|
   spec.extensions    = ["ext/monster_engine/extconf.rb"]
 
   spec.add_development_dependency "bundler", "~> 2.0"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "rake-compiler"
 end
