@@ -62,6 +62,10 @@ static VALUE start(VALUE self) {
     }
   }
 
+  while (true) {
+    sleep(1);
+  }
+
   return Qnil;
 }
 
