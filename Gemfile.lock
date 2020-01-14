@@ -6,8 +6,9 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    plamo (0.4.0)
     rake (13.0.1)
-    rake-compiler (1.0.7)
+    rake-compiler (1.1.0)
       rake
 
 PLATFORMS
@@ -16,6 +17,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 2.0)
   monster_engine!
+  plamo (~> 0.4.0)
   rake (~> 13.0)
   rake-compiler
 

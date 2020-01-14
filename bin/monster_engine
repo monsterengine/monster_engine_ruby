@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require 'plamo'
+require 'monster_engine'
+
+GC.disable
+
+plamo_middleware = Plamo::Middleware.new(nil, ->(config, request, response) {
+  response.body = 'Yo, MonsterEngine'
+})
+
+plamo_app = Plamo::App.new
+plamo_app.push_middleware(plamo_middleware)
+
+monster_engine_config = MonsterEngine::Config.new
+monster_engine_config.bind = '0.0.0.0:8888'
+
+MonsterEngine::Server.new(plamo_app, monster_engine_config).start
