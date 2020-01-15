@@ -10,9 +10,11 @@ Gem::Specification.new do |spec|
   spec.email         = ["shogo.otake@gmail.com"]
 
   spec.summary       = "Ruby Bindings for libmonsterengine"
-  spec.homepage      = "https://github.com/monsterengine/monsterengine-ruby"
+  spec.homepage      = "https://monsterengine.org"
   spec.license       = "MIT"
 
+  spec.metadata["homepage_uri"] = spec.homepage
+  spec.metadata["source_code_uri"] = "https://github.com/monsterengine/monster_engine_ruby"
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
   spec.files         = Dir.chdir(File.expand_path('..', __FILE__)) do
